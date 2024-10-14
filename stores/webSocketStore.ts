@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import Stomp from 'stompjs'
 import SockJS from 'sockjs-client'
 import { useUSerStore } from './userStore'
+import { nextTick } from 'process'
 
 export const useWebSocketStore = defineStore('webSocket', () => {
   const socket = ref(null);
@@ -41,53 +42,56 @@ export const useWebSocketStore = defineStore('webSocket', () => {
 
     //创建一个url和查询参数
     const urlWithParams = new URL(url);
-
-    onMounted(()=>{
-      // 创建 WebSocket 实例
-
-      urlWithParams.searchParams.append('userId', String(user.userId));
-      urlWithParams.searchParams.append('userName', String(user.userName));
-
-      socket.value = new WebSocket(urlWithParams.href);
-  
-      // 监听打开事件
-      socket.value.onopen = () => {
-          console.log('WebSocket connection established');
-      };
     
-      // 监听消息事件
-      socket.value.onmessage = (event) => {
-
-        let m={
-          from:{
-            userId:0,
-            userName:''
-          },
-          message:{
-            service:'',
-            to:'',
-            data:'',
-            from:''
-          }
-        }
-        m= JSON.parse(event.data) //解析出信息
-
-        messageRespond.fromUser=m.from
-        messageRespond.message=m.message
-        messageRespond.on=true
+     
+        // 创建 WebSocket 实例
         
-      };
-      
-      // 监听错误事件
-      socket.value.onerror = (error) => {
-        console.error('WebSocket error:', error);
-      };
+        
+        urlWithParams.searchParams.append('userId', String(user.userId));
+        urlWithParams.searchParams.append('userName', String(user.userName));
+  
+        socket.value = new WebSocket(urlWithParams.href);
     
-      // 监听关闭事件
-      socket.value.onclose = () => {
-        console.log('WebSocket connection closed');
-      };
-    })
+        // 监听打开事件
+        socket.value.onopen = () => {
+            console.log('WebSocket connection established');
+        };
+      
+        // 监听消息事件
+        socket.value.onmessage = (event) => {
+  
+          let m={
+            from:{
+              userId:0,
+              userName:''
+            },
+            message:{
+              service:'',
+              to:'',
+              data:'',
+              from:''
+            }
+          }
+          m= JSON.parse(event.data) //解析出信息
+  
+          messageRespond.fromUser=m.from
+          messageRespond.message=m.message
+          messageRespond.on=true
+          
+        };
+        
+        // 监听错误事件
+        socket.value.onerror = (error) => {
+          console.error('WebSocket error:', error);
+        };
+      
+        // 监听关闭事件
+        socket.value.onclose = () => {
+          console.log('WebSocket connection closed');
+        };
+      
+    
+   
   }
 
   function sendMessage(message:Message,to:Array<{}>){
@@ -124,5 +128,5 @@ export const useWebSocketStore = defineStore('webSocket', () => {
   
     
 
-  return { initWebSocket,sendMessage,messageRespond,sendWSMessage }
+  return { initWebSocket,sendMessage,messageRespond,sendWSMessage,socket }
 })

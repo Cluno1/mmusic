@@ -17,6 +17,7 @@
     "js-cookie": "^3.0.5",
     "mockjs": "^1.1.0",
     "pinia": "^2.2.2",
+    "prerender-spa-plugin": "^3.4.0",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
     "vue": "^3.4.37",
@@ -31,7 +32,9 @@
     "sass": "^1.78.0",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
+    "vite-plugin-prerender": "^1.0.8",
     "vue-loader": "^17.4.2",
+    "vue-meta-info": "^0.1.7",
     "vue-tsc": "^2.0.29"
   }
 }

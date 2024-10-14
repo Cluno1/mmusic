@@ -119,7 +119,7 @@ function changeTitle(index:number){
 function curve(index,audioURL){
   
     let audioELEMENT2 = new Audio(audioURL);
-    audioELEMENT2.muted = false; // 如果你想要音频播放，请设置为 false
+    audioELEMENT2.muted = false; // 如果你想要音频播放，设置为 false
 
     const canvas = document.querySelector('#record-item-' + index + ' #canvas');
     
@@ -301,8 +301,6 @@ let audio={
       timeCarcle=setTimeout(carcle, 500);
     }
     timeCarcle=setTimeout(carcle, 500);
-    
-    
 
     this.stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
     this.audioCtx= new AudioContext();

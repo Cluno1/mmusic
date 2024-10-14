@@ -6,8 +6,7 @@ export const useUSerStore = defineStore('userStore', () => {
     isLogin:false,
     message:{
       userName:'',
-      userId:1,
-
+      userId:2,
       img:'',
       signature:'我是个性签名',
 

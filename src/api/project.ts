@@ -1,5 +1,8 @@
 import request from "./_request";
 
+
+const baseURL='http://localhost:8091'
+
 // 1获取搜索param接口
 function getSearchApi(param) {
   return request({
@@ -9,6 +12,13 @@ function getSearchApi(param) {
   });
 }
 
+function getRecommentApi(){
+  return request({
+    url: 'https://apifoxmock.com/m1/4874726-4530691-default/mmusic/recomment',
+    method: 'get',
+    data:''
+  });
+}
 
 
 // 1获取部门列表接口
@@ -39,5 +49,5 @@ function delProjectApi(data) {
 }
 
 export {
-  getSearchApi
+  getSearchApi,getRecommentApi
 }

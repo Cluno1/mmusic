@@ -7,6 +7,7 @@ import { useCookieStore } from '../../../stores/cookieStore';
 
 let userStore=useUSerStore()
 let cookieStore=useCookieStore()
+//退出登录函数
 function withdraw(){
     cookieStore.deleteCookie('userName')
     cookieStore.deleteCookie('password')

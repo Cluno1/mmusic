@@ -3,9 +3,7 @@
 </script>
 
 <template>
-    <div>
-        歌单
-    </div>
+    <h1>歌单页面</h1>
 </template>
 
 <style scoped>

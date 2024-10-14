@@ -31,7 +31,7 @@ const screenStore=useScreenStore()
       </template>
       <el-menu-item-group>
         <!-- <template #title><span>Group One</span></template> -->
-        <el-menu-item index="recommend" > {{ t('message.aside.explore') }}</el-menu-item>
+        <el-menu-item index="explore" > {{ t('message.aside.explore') }}</el-menu-item>
         <el-menu-item index="find">{{ t('message.aside.find') }}</el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>

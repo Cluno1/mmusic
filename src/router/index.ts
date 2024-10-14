@@ -2,6 +2,7 @@ import { onMounted } from 'vue';
 import { useUSerStore } from './../../stores/userStore';
 import { useCookieStore } from './../../stores/cookieStore';
 import { createRouter, createWebHistory } from 'vue-router'
+import { useWebSocketStore } from '../../stores/webSocketStore';
 
 let userStore=null
 let cookieStore=null
@@ -17,32 +18,32 @@ const router = createRouter({
         component:  () => import("../components/home/Explore.vue"),
         children:[
           {
-            path: '/search',
+            path: 'search',
             name: 'search',
             component:  () => import("../components/Search.vue"),
           },
           {
-            path: '/recommend',
+            path: 'recommend',
             name: 'recommend',
             component:  () => import("../components/home/explore/Recommend.vue"),
           },
           {
-            path: '/rank',
+            path: 'rank',
             name: 'rank',
             component:  () => import("../components/home/explore/Rank.vue"),
           },
           {
-            path: '/songList',
+            path: 'songList',
             name: 'song-list',
             component:  () => import("../components/home/explore/SongList.vue"),
           },
           {
-            path: '/radio',
+            path: 'radio',
             name: 'radio',
             component:  () => import("../components/home/explore/radio/Radio.vue"),
           },
           {
-            path: '/singer',
+            path: 'singer',
             name: 'singer',
             component:  () => import("../components/home/explore/Singer.vue"),
           },
@@ -116,6 +117,7 @@ const router = createRouter({
   router.beforeEach((to,from,next)=>{
     userStore=useUSerStore()
     cookieStore=useCookieStore()
+    
     if(!userStore.userMessage.isLogin){
       let name=cookieStore.getCookie('userName')
       let password=cookieStore.getCookie('password')
@@ -128,7 +130,15 @@ const router = createRouter({
           
       }
       
+  
+    }else{
       
+    //登录websocket  用户已经登陆并且没有链接socket时
+    let webSocketStore= useWebSocketStore()
+    if(!webSocketStore.socket){
+      webSocketStore.initWebSocket()
+    }
+    
     }
     next()
       

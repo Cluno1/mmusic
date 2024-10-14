@@ -1,19 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import{useBoxStore} from '../../../../stores/boxStore'
-import{useGridBoxStore} from '../../../../stores/gridBoxStore'
-    //推荐-歌曲-盒子
-    let boxStore=useBoxStore()
-    let box=null;
-    
+import { getRecommentApi } from '../../../api/project';
 
-    onMounted(()=>{
-
-        box=boxStore.initBox(3000,6000,document.querySelectorAll('.box-item'),document.querySelector('.box-container'),document.querySelectorAll('.box-pointer'),document.querySelector('.box-left'),document.querySelector('.box-right'));
-        box.addUrl(['/src/assets/temp/moonNight.png','/src/assets/temp/spring.jpg','/src/assets/temp/xiao.png','https://picsum.photos/420/360?random=30','https://picsum.photos/420/360?random=90'])
-        box.boxStart(box)
-
-    })
 
     interface Song {
                 songId:number,
@@ -27,26 +16,15 @@ import{useGridBoxStore} from '../../../../stores/gridBoxStore'
 
 const songs=ref([] as Song[])
 
-function testSongs(){
-    let random=0;
-    if(songs.value.length!=0){
-        random=songs.value.length
-    }
-    for(let i=0;i<10;i++){
+async function getSongs(){
 
-        let song={
-
-            songId:random,
-            songName:'达尔文',
-            songSinger:'蔡健雅',
-            songSignature:'好听，温柔',
-            songSubmitTime:'2024-9-26',
-            songImg:`https://picsum.photos/420/360?random=${random}`,//url
-            songImgLoad:false
-        }
+    let re= await getRecommentApi()
+    console.log(re.data.data)
+    re.data.data.forEach((song)=>{
+        let s=`https://picsum.photos/580/460?random=${song.songId}`
+        song.songImg=s;
         songs.value.push(song)
-        random++
-    }
+    })
 }
 
 
@@ -56,11 +34,16 @@ function handleScroll(event:Event){
 
    
     if(target.scrollHeight-target.scrollTop<=(target.clientHeight)){
-        testSongs()
+        getSongs()
     }
 }
 
-testSongs()
+
+
+onMounted(async()=>{
+    getSongs()
+
+})
 //box test
 const bgStyle=ref<null|Song>(null)
 const boxSongs=ref([] as Song[])
@@ -108,7 +91,7 @@ function backgroundStyle(song:Song|null){
 
 initBoxMessage()
 
-// const timer
+// const timer 推荐盒子的包装器
 function decorateBox(){
 
   function check(){
@@ -166,6 +149,7 @@ boxTurn(null)
 </script>
 
 <template>
+    <keep-alive>
     <div class="recommend-layout "> 
        
         <div class="box-layout" :style="backgroundStyle(bgStyle)"> 
@@ -242,7 +226,7 @@ boxTurn(null)
         </div>
         
     </div>
-        
+    </keep-alive>
        
         
         

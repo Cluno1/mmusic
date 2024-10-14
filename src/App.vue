@@ -21,9 +21,6 @@ const screenStore=useScreenStore()
 
 let htmlLayout=null
 
-let webSocketStore= useWebSocketStore()
-webSocketStore.initWebSocket()
-
 
 
 let smQuery =null
@@ -89,6 +86,7 @@ let loading=(target:string)=>{
 
 
 
+
 </script>
 
 <template>
@@ -128,7 +126,7 @@ let loading=(target:string)=>{
     bottom: 0;
     left: 10rem; // 确保左侧对齐
     width: 100%; // 确保宽度填满整个屏幕宽度
-    z-index: 2000; // 可选，如果你需要确保 footer 在其他内容之上
+    z-index: 2000; 
   }
 
   .aside-box{
