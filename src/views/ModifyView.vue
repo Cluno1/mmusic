@@ -15,7 +15,7 @@
       </div>
       
     </div>
-    <el-form-item label="歌名">
+    <el-form-item label="搜索歌名">
       <el-autocomplete
         v-model="edit.name"
         :fetch-suggestions="querySearch"
@@ -61,10 +61,8 @@
     </el-button>
   </div>
   </el-form-item>
-  <el-form-item label="歌词文本">
-      <el-input v-model="edit.lrc" type="textarea" :rows="20" placeholder="歌词每行以\n结尾" />
-    </el-form-item>
-    <el-form-item label="歌曲封面">
+  
+    <el-form-item label="更新歌曲封面">
       <el-upload
     v-model:file-list="pictureList"
     action=""
@@ -82,6 +80,9 @@
     </template>
   </el-upload>
     </el-form-item>
+    <el-form-item label="更新歌词">
+      <el-input v-model="edit.lrc" type="textarea" :rows="20" placeholder="歌词每行以\n结尾" />
+  </el-form-item>
 
     <el-form-item>
       <el-button type="primary" @click="song_modify">modify</el-button>
@@ -96,11 +97,12 @@
 
 <script setup lang="ts">
 import { useEditStore } from '@/stores/edit';
+import { useUtilStore } from '@/stores/Utils';
 import { onMounted, ref,nextTick } from 'vue'
 import axios from 'axios';
 
 const {edit,list,edit_submit,getMessage_byName,edit_delete,changePage}=useEditStore()
-
+const {netWorkUrl}=useUtilStore()
 
 
 interface RestaurantItem {
@@ -133,7 +135,7 @@ const handleSelect = (item: RestaurantItem) => {
 }
 
 const getName= async  ()=>{
-        let url='http://localhost:8090/name/all'
+        let url=netWorkUrl.url+'/name/all'
         try{
             const a= await axios.get(url).then((response)=>{
                 if(response.data.code==200){

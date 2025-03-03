@@ -3,8 +3,9 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
 import { List } from '@element-plus/icons-vue'
+import { useUtilStore } from './Utils'
 export const useEditStore = defineStore('edit', () => {
-  
+    const {netWorkUrl} =useUtilStore()
     
     type song={
         id:number,
@@ -103,7 +104,7 @@ export const useEditStore = defineStore('edit', () => {
     
     const edit_submit=(formData:FormData)=>{
        
-        let url='http://localhost:8090/submit'
+        let url=netWorkUrl.url+'/submit'
         axios.post(url, formData,
             {headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(response => {
@@ -117,7 +118,7 @@ export const useEditStore = defineStore('edit', () => {
     const edit_delete=()=>{
         var r=confirm('目前版本删除不可逆，请问是否确认删除?')
         if(r){
-            axios.get(`http://localhost:8090/delete/id/${edit.id}`)
+            axios.get(netWorkUrl.url+`/delete/id/${edit.id}`)
             .then(response => {
                 if(response.data.code==200){
                         alert(response.data.message)
@@ -137,7 +138,7 @@ export const useEditStore = defineStore('edit', () => {
         //通过name获取该歌词全部信息
     
     
-    axios.get(`http://localhost:8090/search/name/${edit.name}`)
+    axios.get(netWorkUrl.url+`/search/name/${edit.name}`)
     .then(response => {
         
         if(response.data.code==200){
@@ -148,7 +149,6 @@ export const useEditStore = defineStore('edit', () => {
                 console.log(a)
                 list.songs_list=a;
                 list.total=a.length
-                alert('list.total:'+list.total)
                 
                 list.page=1;
                 

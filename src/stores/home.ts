@@ -1,10 +1,11 @@
 import { List } from '@element-plus/icons-vue';
 import { ref, reactive, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useUtilStore } from './Utils';
 import axios from 'axios'
 
 export const useHomeStore = defineStore('home', () => {
-
+  const {netWorkUrl}=useUtilStore()
   type song={
     id:number,
     name:string,
@@ -27,7 +28,7 @@ export const useHomeStore = defineStore('home', () => {
   })
   
   const get_allData=()=>{
-    let url='http://localhost:8090/search/all'
+    let url=netWorkUrl.url+'/search/all'
     axios.get(url)
     .then(response => {
       if(response.data.code==200){

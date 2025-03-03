@@ -3,10 +3,10 @@
    
     <el-form :model="edit" label-width="auto" style="max-width: 600px">
     <el-form-item label="歌名">
-      <el-input v-model="edit.name" style="width: 200px;" clearable/>
+      <el-input v-model="edit.name" style="width: 400px;" clearable/>
     </el-form-item>
     <el-form-item label="歌手">
-      <el-input v-model="edit.author" style="width: 200px;" clearable />
+      <el-input v-model="edit.author" style="width: 400px;" clearable />
     </el-form-item>
     <el-form-item label="添加标签">
       <div class="flex gap-2">
@@ -38,9 +38,7 @@
     </el-button>
   </div>
     </el-form-item>
-    <el-form-item label="歌词文本">
-      <el-input v-model="edit.lrc" type="textarea" :rows="20" placeholder="歌词每行以\n结尾" />
-    </el-form-item>
+    
     <el-form-item label="歌曲文件">
       <el-upload
     v-model:file-list="fileList"
@@ -81,9 +79,14 @@
     </template>
   </el-upload>
     </el-form-item>
+
+    <el-form-item label="歌词文本">
+      <el-input v-model="edit.lrc" type="textarea" :rows="20" placeholder="歌词每行以\n结尾" />
+    </el-form-item>
     <el-form-item label="上传者名字(real name)">
       <el-input v-model="edit.submitAuthor" style="width: 200px;" clearable/>
     </el-form-item>
+
     <el-form-item>
       <el-button type="primary" @click="onSubmit">submit</el-button>
       <el-button type="warning" @click="clearAll">reset</el-button>

@@ -11,17 +11,7 @@ import { watch, watchEffect,nextTick } from 'vue';
 
 //引入play仓库
 const {play} =usePlayStore()
-// 移除组件
-const update=ref(true)
-watch(()=>play.musicList,()=>{
-	update.value = false
-            // 在组件移除后，重新渲染组件
-            // this.$nextTick可实现在DOM 状态更新后，执行传入的方法。
-            nextTick(() => {
-                update.value = true
-            })
 
-})
 
 // import path from 'path';
 const {aside} = useAsideStore()
@@ -74,9 +64,12 @@ watchEffect(()=>{
         <Head/>
       </el-header>
       <el-container>
-        <el-aside >
-          <Aside/>
+        
+          <el-aside >
+          <Aside class="elAside"/>
         </el-aside>
+        
+        
         <el-main>
           <!-- <RouterLink to="/">hone</RouterLink>
           <RouterLink to="/search">search</RouterLink> -->
@@ -104,7 +97,7 @@ watchEffect(()=>{
               
               
             </div>
-            <div class="play_music" v-if="update">
+            <div class="play_music" >
               <AudioPlayer/>
             </div>
             
@@ -124,6 +117,7 @@ watchEffect(()=>{
   height: 600px;
   overflow:visible;
   display: grid;
+  
 }
 
 .main{
@@ -133,7 +127,8 @@ watchEffect(()=>{
 .foot{
   width: 100%;
   /* height: ; */
-  background-color: #d8b5c7;
+  background-color: rgb(107, 196, 231);
+  box-shadow: 12px 12px 2px 1px teal;
   
   display: flex;
   align-items: center;
@@ -148,14 +143,20 @@ watchEffect(()=>{
   /* color: rgb(188, 19, 92); */
   /* background-color: beige; */
   /* text-align:left ; */
+  height: 100px;
   display: flex;
+  background-color: rgb(140, 128, 232);
   /* height: 100%; */
   align-items: center;
   border-right: 500px;
   overflow: hidden;
   
 }
+.elAside :hover{
+  border-radius: 2%;
+  box-shadow: 2px;
 
+}
 .dot1 {
   width: 20px;
   height: 20px;

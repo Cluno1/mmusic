@@ -47,5 +47,6 @@
    <style  >
    .body{
         width: 15rem;
+        
    }
    </style>

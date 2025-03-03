@@ -1,9 +1,10 @@
 import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { useUtilStore } from './Utils'
 
 export const useSearchStore = defineStore('search', () => {
-
+  const {netWorkUrl}=useUtilStore()
   type songHead={
     id:number,
     name:string,
@@ -19,7 +20,7 @@ export const useSearchStore = defineStore('search', () => {
   
   const get_search=()=>{
 
-    let url='http://localhost:8090/select?type='
+    let url=netWorkUrl.url+'/select?type='
 
     if(search.type=='name'){
       url=url+'name&search='+search.val;

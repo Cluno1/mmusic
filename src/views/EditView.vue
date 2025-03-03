@@ -10,7 +10,13 @@
   >
   
     <div class="flex-grow" flex-grow="1" >
-        <el-text class="mx-1" type="primary" >choose type to edit :</el-text>
+        <el-text class="mx-1" type="primary" >
+            <el-tag >
+                choose type to edit :
+        
+            </el-tag>
+        </el-text>
+            
     </div>
     
     <el-menu-item index="0" ></el-menu-item>

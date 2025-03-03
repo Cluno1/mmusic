@@ -2,17 +2,15 @@
 <template>
 	
 	<div class="player"  >
-		<lbAudio 
-		autoplay
+
+		<lbAudio
+        class="music-player"
+        :musicList="play.musicList"
+        :index="0"
+        :lyrics="false"
+    	>
+    	</lbAudio>
 		
-		class="music-player" 
-		id="lbaudio"
-		:musicList="play.musicList" 
-		:index="0" 
-		:lyrics="false"
-		:Error="handleError"
-		>
-		</lbAudio>
 	</div>
 	
 </template>
@@ -28,13 +26,12 @@ const {play}=usePlayStore()
 </script>
 <style>
 .player{
-	width: 1000px;
+	width: auto;
+	height: 100px;
 }
 .music-player {
 	width: 100%;
 	height: 100%;
 }
 </style>
-
-
 
