@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/src/assets/love language.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mMusic</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts">
+      const setHtmlFontSize = () => {
+  const htmlDom = document.getElementsByTagName('html')[0];
+  let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
+  
+  //100px=1rem
+  if (htmlWidth >= 750) {
+    htmlWidth = 750;
+  }
+  if (htmlWidth <= 320) {
+    htmlWidth = 320;
+  }
+  htmlDom.style.fontSize = `${htmlWidth / 7.5}px`;
+};
+window.addEventListener('resize', setHtmlFontSize);
+// window.onresize = setHtmlFontSize;
+setHtmlFontSize();
+
+// function setFontSize() {
+//   const screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+//   const screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+
+
+//   if (screenWidth <= 480 && screenHeight <= 800) {
+//     // 手机设备
+//     htmlDom.style.fontSize = '16px';
+//   } else {
+//     // 电脑网页
+//     htmlDom.style.fontSize = '18px';
+//   }
+
+//   document.documentElement.style.fontSize = fontSize;
+// }
+
+// window.addEventListener('resize', setFontSize);
+// setFontSize();
+
+
+    </script>
+  </body>
+</html>
