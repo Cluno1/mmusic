@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import{useBoxStore} from '../../../../stores/boxStore'
+
+
 import { getRecommentApi } from '../../../api/project';
+import { useIntersectionObserver } from '@vueuse/core';
 
 
     interface Song {
@@ -19,13 +22,37 @@ const songs=ref([] as Song[])
 async function getSongs(){
 
     let re= await getRecommentApi()
+    
     console.log(re.data.data)
     re.data.data.forEach((song)=>{
-        let s=`https://picsum.photos/580/460?random=${song.songId}`
+        let r=Math.random()%100
+        let s=`https://picsum.photos/580/460?random=${r}`
         song.songImg=s;
         songs.value.push(song)
     })
 }
+//节流
+function decReFresh(time:number){
+    let timer=true  //true ok ; false no and wait until true
+
+    return function refresh(){
+        
+        if(timer){
+            songs.value=[]
+            getSongs()
+            timer=false
+            setTimeout(() => {
+                console.log('ok')
+                timer=true
+                    
+            }, time);
+        }
+    
+    }
+}
+
+let a=decReFresh(2000)
+
 
 
 function handleScroll(event:Event){
@@ -91,7 +118,7 @@ function backgroundStyle(song:Song|null){
 
 initBoxMessage()
 
-// const timer 推荐盒子的包装器
+// const timer 推荐盒子的包装器    防抖
 function decorateBox(){
 
   function check(){
@@ -151,6 +178,7 @@ boxTurn(null)
 <template>
     <keep-alive>
     <div class="recommend-layout "> 
+        <button class="refresh" @click="a"> 刷新</button>
        
         <div class="box-layout" :style="backgroundStyle(bgStyle)"> 
             <div class="color-blur" >
@@ -224,19 +252,28 @@ boxTurn(null)
                     
             </div>
         </div>
+
+        
         
     </div>
     </keep-alive>
        
-        
         
     
 </template>
 
 <style scoped  lang="scss">
 .recommend-layout{
+    .refresh{
+    z-index: 3;
+    position: absolute;
+    right: 1rem;
+    top: 20rem;
+    border-radius: 10px;
+    background-color: #9099ed5e;
+}
     display: flex;
-    
+    position: relative;
     flex-direction: column;
     gap: 2rem;
     .abc{
